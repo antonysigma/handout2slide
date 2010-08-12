@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+#  USAGE: ps-count file.ps
+#
+
+if [ "$#" != "1" ]; then
+   echo "ERROR: No file specified"
+   exit 1
+fi
+
+grep "%%Pages:" $1 |tail -n 1 | sed -e 's/%%Pages: \([0-9]\+\)/\1/'
+

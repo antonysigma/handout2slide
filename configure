@@ -1,0 +1,19 @@
+#!/bin/sh
+if [ "$#" != "1" ]; then
+	echo "Usage: ./configure [pdf]"
+	exit 1
+fi
+
+if [ ! -f $1 ]; then
+	echo "Error: file $1 does not exist!"
+	exit 1
+fi
+
+pdf2ps $1 a.ps
+pages=`grep "%%Pages:" a.ps |tail -n 1 | sed -e 's/%%Pages: \([0-9]\+\)/\1/'`
+docs=`seq $pages`
+
+#Make modification to the makefile
+sed -e "1s/pages=[0-9]\+/pages=$pages/" \
+	makefile.bak > makefile
+

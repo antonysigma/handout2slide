@@ -1,5 +1,5 @@
-pages=10
-docs=$(seq $(pages))
+pages=5
+docs:=$(shell seq $(pages))
 pdfa=$(patsubst %,%-a.tmp,$(docs))
 pdfb=$(patsubst %,%-b.tmp,$(docs))
 pdfc=$(patsubst %,%-c.tmp,$(docs))

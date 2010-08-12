@@ -1,10 +1,10 @@
-pages=16
-docs=1 2 3 4 5 6 7 8 9 16
+pages=10
+docs=$(seq $(pages))
 pdfa=$(patsubst %,%-a.tmp,$(docs))
 pdfb=$(patsubst %,%-b.tmp,$(docs))
 pdfc=$(patsubst %,%-c.tmp,$(docs))
 
-all:x.pdf
+all:x.pdf a.ps
 
 x.pdf:$(pdfa) $(pdfb) $(pdfc)
 	gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOUTPUTFILE=x *.tmp
@@ -21,9 +21,6 @@ $(pdfc):%-c.tmp:%.ps
 
 $(patsubst %,%.ps,$(docs)):%.ps:a.ps
 	psselect -p$(patsubst %.ps,%,$@) $< $@
-
-a.ps:a.pdf
-	pdf2ps a.pdf
 
 clean:
 	rm -f *.ps *-a *-b *-c *-a.pdf *-b.pdf *-c.pdf *.tmp

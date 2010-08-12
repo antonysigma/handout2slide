@@ -1,0 +1,9 @@
+#!/bin/sh
+# inserts crop box command into the file passed as the first argument
+# values for crop are 2..5th cl arguments
+
+prologln=`grep -m 1 -n "^%%BeginProlog$" $1 | cut -f1 -d:`
+
+head -n $prologln $1
+echo "[/CropBox [$2 $3 $4 $5] /PAGES pdfmark"
+tail -n +`expr $prologln + 1` $1
